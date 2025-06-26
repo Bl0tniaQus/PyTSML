@@ -1,0 +1,22 @@
+[project]
+name = "PyTSML"
+version = "1.0.0"
+authors = [
+  { name="Adrian Hałys", email="author@example.com" },
+]
+description = "Placeholder"
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/Bl0tniaQus/PyTSML"
+Issues = "https://github.com/Bl0tniaQus/PyTSML/issues"
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
