@@ -1,6 +1,9 @@
+# PyTSML
+# For information about the license, check: https://github.com/Bl0tniaQus/PyTSML
 import numpy as np
 from scipy.linalg import svd
 from fastdtw import fastdtw
+import random
 import warnings
 warnings.filterwarnings('ignore')
 class LDMLT:
@@ -64,8 +67,10 @@ class LDMLT:
             MTS_E2[i, :] = MTS_2[i, w[:, 1].astype(int)]
         return Dist, MTS_E1, MTS_E2
     def predict(self, X, k = 3):
-        if len(X[0].shape) == 1:
-            X = np.array([X])
+        if not isinstance(X, list):
+            if len(X[0].shape) == 1:
+                X = np.array([X])
+        X = [np.array(X[i].copy()) for i in range(len(X))]
         n_train = len(self.X)
         n_test = len(X)
         Y_kind = np.unique(self.Y)
@@ -260,7 +265,7 @@ class LDMLT:
         return M
 
 class DDE:
-    def __init__(self, DE_step = 3, DE_dim = 2, DE_slid = 2, alpha = 2, beta = 3, grid_size = 0, filter_param = 0.5):
+    def __init__(self, DE_step = 3, DE_dim = 2, DE_slid = 2, alpha = 2, beta = 3, grid_size = 0.1, filter_param = 0.5):
         self.DE_step = DE_step
         self.DE_dim = DE_dim
         self.DE_slid = DE_slid
@@ -452,8 +457,9 @@ class DTW_KNN:
         dist, _ = fastdtw(a,b)
         return float(dist)
     def predict(self, X, k = 3):
-        if len(X[0].shape) == 1:
-            X = np.array([X])
+        if not isinstance(X, list):
+            if len(X[0].shape) == 1:
+                X = np.array([X])
         n_train = len(self.X)
         n_test = len(X)
         Y_kind = np.unique(self.Y)
@@ -464,7 +470,6 @@ class DTW_KNN:
                 Dist = self.dtw(self.X[index_train], X[index_test])
                 Distance[index_train] = Dist
             Inds = np.argsort(Distance,stable=True)
-            
             counts = np.zeros(len(Y_kind))
             for j in range(k):
                 counts[np.nonzero(Y_kind == self.Y[Inds[j]])] += 1
@@ -476,4 +481,30 @@ class DTW_KNN:
         if len(Pred_Y) == 1:
             Pred_Y = Pred_Y[0]
         return Pred_Y
+def generate_example_data(min_len, max_len, n_instances, n_classes):
+    X = []
+    Y = []
+    for i in range(n_instances):
+        instance = []
+        label = random.randint(1,n_classes)
+        length = random.randint(min_len, max_len)
+        for j in range(length):
+            noise = random.randint(-(10*label), 10*label) / 10
+            f1 = (j/10) + noise
+            f2 = (0 + (j%2)*2) + noise
+            f3 = (0 + (j%2)*2*(not j%2)*(-1)) + noise
+            instance.append([f1,f2,f3])
+        X.append(instance)
+        Y.append(label)
+    return X, Y
+def accuracy(predicted, true):
+    lp = len(predicted)
+    lt = len(true)
+    if lp != lt:
+        raise ValueError("Input vectors are not the same length!")
+    counts = 0
+    for i in range(lp):
+        if predicted[i] == true[i]:
+            counts += 1
+    return counts/lp
 

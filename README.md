@@ -10,9 +10,14 @@ This package, which was initially made as a result of my MSC Thesis in Computer 
 - KNN classifier with DTW distance.
 
 # Usage
+To use the package, build the wheel yourself, install it through pip or just use the source file in Your project.
 
-# License
+```
+pip3 install PyTSML
+```
 
 # Contact
+
+Please use Github issues page for anything related to this package.
 
 
