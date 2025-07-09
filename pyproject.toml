@@ -1,10 +1,10 @@
 [project]
 name = "PyTSML"
-version = "1.0.0"
+version = "1.1"
 authors = [
-  { name="Adrian Hałys", email="author@example.com" },
+  { name="Adrian Hałys", email="bl0tniaqus578@gmail.com" },
 ]
-description = "Placeholder"
+description = "Python implementations for a few machine learning algorithms used for working with time series, including LDMLT and DDE"
 readme = "README.md"
 keywords = ["Time Series", "Classification", "Machine Learning", "LDMLT", "DDE", "DE", "Delay Embedding", "DTW"]
 requires-python = ">=3.11"
@@ -16,7 +16,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
 ]
-license = "MIT"
+license = "Apache-2.0"
 license-files = ["LICEN[CS]E*"]
 
 [project.urls]
